@@ -1,7 +1,7 @@
 // Create mongo instance
 const mongo = require('mongodb').MongoClient;
 // Create socket instance and start listening on port 4000
-const io = require('socket.io').listen(4000).sockets;
+const io = require('socket.io').listen(9864).sockets;
 
 // Connect to mongodb
 mongo.connect('mongodb://127.0.0.1/chat', function(err, db) {
@@ -12,7 +12,7 @@ mongo.connect('mongodb://127.0.0.1/chat', function(err, db) {
   console.log("Connected to mongo database");
 
   // Connect to socket io
-  client.on('connection', function() {
+  io.on('connection', function(socket) {
     let chat = db.collection('chats');
 
     // send status
@@ -32,16 +32,16 @@ mongo.connect('mongodb://127.0.0.1/chat', function(err, db) {
 
     socket.on('input', function(data) {
       let name = data.name;
-      let message = data.messge;
+      let message = data.message;
 
       // Check for name and messages
-      if (name == '' || message == '') {
+      if (name === '' || message === '') {
           // Send error status
           sendStatus('Please enter a name and message');
       }
       else {
         // Insert message to db
-        chat.Insert({name: name, message: message}, function() {
+        chat.insert({name: name, message: message}, function() {
           io.emit('messages', [data]);
 
           // Send status obj
