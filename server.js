@@ -1,7 +1,7 @@
 // Create mongo instance
 const mongo = require('mongodb').MongoClient;
 // Create socket instance and start listening on port 4000
-const io = require('socket.io').listen(9864).sockets;
+const io = require('socket.io').listen(4000).sockets;
 
 // Connect to mongodb
 mongo.connect('mongodb://127.0.0.1/chat', function(err, db) {

@@ -23,7 +23,7 @@
     }
   }
 
-  var socket = io.connect('http://192.168.1.15:4000');
+  var socket = io.connect('http://192.168.0.195:4000');
 
   // Check for connection
   if (socket !== undefined) {
